@@ -171,8 +171,6 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     item['title'] = takeTitleFromFocusedItem()
     item['file_original_path'] = ""
     item['3let_language'] = []
-    item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
-    item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
   PreferredSub = params.get('preferredlanguage')
 
