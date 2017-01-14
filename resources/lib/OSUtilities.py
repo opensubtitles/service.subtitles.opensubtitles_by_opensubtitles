@@ -59,7 +59,10 @@ class OSDBServer:
         except:
           pass
             
-        imdb = str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
+        if xbmc.Player().isPlaying():
+            imdb = str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
+        else:
+            imdb = str(xbmc.getInfoLabel("ListItem.IMDBNumber").replace('tt',''))
         
         if ((not item['tvshow']) and imdb != ""):
           searchlist.append({'sublanguageid' :",".join(item['3let_language']),
