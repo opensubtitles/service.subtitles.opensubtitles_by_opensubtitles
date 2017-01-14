@@ -104,7 +104,6 @@ def Download(id,url,format,stack=False):
     return subtitle_list
 
 def takeTitleFromFocusedItem():
-    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
     labelMovieTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
     labelYear = xbmc.getInfoLabel("ListItem.Year")
     labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
@@ -112,6 +111,21 @@ def takeTitleFromFocusedItem():
     labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
     isItMovie = xbmc.getCondVisibility("Container.Content(movies)") or labelType == 'movie'
     isItEpisode = xbmc.getCondVisibility("Container.Content(episodes)") or labelType == 'episode'
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
+    if labelType:
+        if labelType == 'movie':
+            isItMovie = True
+            isItEpisode = False
+        elif labelType == 'episode':
+            isItMovie = False
+            isItEpisode = True
+    else:
+        if xbmc.getCondVisibility("Container.Content(movies)"):
+            isItMovie = True
+            isItEpisode = False
+        elif xbmc.getCondVisibility("Container.Content(episodes)"):
+            isItMovie = False
+            isItEpisode = True
 
     title = 'SearchFor...'
     if isItMovie and labelMovieTitle and labelYear:
