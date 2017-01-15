@@ -109,23 +109,9 @@ def takeTitleFromFocusedItem():
     labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
     labelSeason = xbmc.getInfoLabel("ListItem.Season")
     labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
-    isItMovie = False
-    isItEpisode = False
-    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
-    if labelType:
-        if labelType == 'movie':
-            isItMovie = True
-            isItEpisode = False
-        elif labelType == 'episode':
-            isItMovie = False
-            isItEpisode = True
-    else:
-        if xbmc.getCondVisibility("Container.Content(movies)"):
-            isItMovie = True
-            isItEpisode = False
-        elif xbmc.getCondVisibility("Container.Content(episodes)"):
-            isItMovie = False
-            isItEpisode = True
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode	
+    isItMovie = labelType == 'movie' or xbmc.getCondVisibility("Container.Content(movies)")
+    isItEpisode = labelType == 'episode' or xbmc.getCondVisibility("Container.Content(episodes)")
 
     title = 'SearchFor...'
     if isItMovie and labelMovieTitle and labelYear:
