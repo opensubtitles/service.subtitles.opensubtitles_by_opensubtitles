@@ -41,7 +41,7 @@ def Search( item ):
 
   if search_data != None:
     search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
-				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))))[0],
+				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(item['file_original_path'])))[0],
 				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
 				     not x['LanguageName'] == PreferredSub])
     for item_data in search_data:
@@ -103,6 +103,24 @@ def Download(id,url,format,stack=False):
   if xbmcvfs.exists(subtitle_list[0]):
     return subtitle_list
 
+def takeTitleFromFocusedItem():
+    labelMovieTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
+    labelYear = xbmc.getInfoLabel("ListItem.Year")
+    labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
+    labelSeason = xbmc.getInfoLabel("ListItem.Season")
+    labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode	
+    isItMovie = labelType == 'movie' or xbmc.getCondVisibility("Container.Content(movies)")
+    isItEpisode = labelType == 'episode' or xbmc.getCondVisibility("Container.Content(episodes)")
+
+    title = 'SearchFor...'
+    if isItMovie and labelMovieTitle and labelYear:
+        title = labelMovieTitle + " " + labelYear
+    elif isItEpisode and labelTVShowTitle and labelSeason and labelEpisode:
+        title = ("%s S%.2dE%.2d" % (labelTVShowTitle, int(labelSeason), int(labelEpisode)))
+
+    return title
+
 def get_params(string=""):
   param=[]
   if string == "":
@@ -129,17 +147,32 @@ params = get_params()
 if params['action'] == 'search' or params['action'] == 'manualsearch':
   log( __name__, "action '%s' called" % params['action'])
   item = {}
-  item['temp']               = False
-  item['rar']                = False
-  item['mansearch']          = False
-  item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
-  item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
-  item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
-  item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
-  item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
-  item['file_original_path'] = xbmc.Player().getPlayingFile().decode('utf-8')                 # Full path of a playing file
-  item['3let_language']      = [] #['scc','eng']
-  PreferredSub		      = params.get('preferredlanguage')
+
+  if xbmc.Player().isPlaying():
+    item['temp']               = False
+    item['rar']                = False
+    item['mansearch']          = False
+    item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
+    item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
+    item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
+    item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
+    item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
+    item['file_original_path'] = xbmc.Player().getPlayingFile().decode('utf-8')                 # Full path of a playing file
+    item['3let_language']      = [] #['scc','eng']
+
+  else:
+    item['temp'] = False
+    item['rar'] = False
+    item['mansearch'] = False
+    item['year'] = ""
+    item['season'] = ""
+    item['episode'] = ""
+    item['tvshow'] = ""
+    item['title'] = takeTitleFromFocusedItem()
+    item['file_original_path'] = ""
+    item['3let_language'] = []
+
+  PreferredSub = params.get('preferredlanguage')
 
   if 'searchstring' in params:
     item['mansearch'] = True
