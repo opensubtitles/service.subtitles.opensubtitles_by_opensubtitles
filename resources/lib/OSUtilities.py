@@ -41,11 +41,12 @@ class OSDBServer:
                                                 int(item['episode']),)
                                               ).replace(" ","+")      
       else:
-        if str(item['year']) == "":
+        if str(item['year']) == "" and xbmc.Player().isPlaying():
           item['title'], item['year'] = xbmc.getCleanMovieTitle( item['title'] )
     
         OS_search_string = item['title'].replace(" ","+")
     
+
       log( __name__ , "Search String [ %s ]" % (OS_search_string,))
 
       if not item['temp']:
