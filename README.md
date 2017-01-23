@@ -8,6 +8,9 @@ How to install this addon in KODI:
          
                             
 Changelog
+5.2.14
+- New feature: Users are able to check for subtitles when Kodi is not playing, by using the manual search or by standing on an item and opening the subtitles search dialog (By key or by an external addon)
+- The external addon for the contextmenu can be downloaded from here: https://github.com/burekas7/context.subtitlesdialog.contextmenu
 
 5.1.14
 - Users are able to download subtitles as anonymous without authentication. Added localized descriptions, media files
