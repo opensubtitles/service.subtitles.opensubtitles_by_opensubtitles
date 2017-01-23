@@ -54,7 +54,7 @@
 Improved add-on by OpenSubtitles.org
 v5.2.14 (2017-01-23)
 - Users are able to download subtitles as anonymous without authentication. Added localized descriptions, media files
-- New feature: Users are able to check for subtitles when Kodi is not playing, by using the manual search or by standing on an item and opening the subtitles search dialog (By key or by an external addon)
+- New feature: Users are able to check for subtitles when Kodi is not playing, by using the manual search or by standing on an item and opening the subtitles search dialog (By key or by an external addon)  | @burekas
 	</news>
     <platform>all</platform>
 	<language></language>
