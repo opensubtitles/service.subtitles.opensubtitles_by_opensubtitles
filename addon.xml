@@ -50,7 +50,8 @@
 	<description lang="tr">Her gün eklenen, pek çok dildeki binlerce film ve dizi altyazısı. Kaynağından ücretsiz indirme, API desteği ve milyonlarca kullanıcı.</description>
 	<description lang="uz">Film va TV Taglavhalari ko'p tillarda, minglab tarjima qilingan taglavhalar har kuni tizimga yuklanadi. Bepul resursdan yuklab oling, API qo'llaydi, millionlab foydalanuvchilar.</description>
 	<description lang="zh">多语种的电影及剧集字幕，每日更新千余条翻译好的字幕。免费下载，提供API接口，已拥有上百万的用户。</description>
-    <disclaimer>Works without log-in</disclaimer>                                               
+    <disclaimer>Works without log-in</disclaimer>
+    <disclaimer lang="hr">Radi bez prijave</disclaimer>
 	<news>
 Improved add-on by OpenSubtitles.org
 v5.2.14 (2017-01-23)
