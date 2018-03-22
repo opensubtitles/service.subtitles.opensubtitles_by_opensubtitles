@@ -40,6 +40,9 @@ def Search( item ):
     return
 
   if search_data != None:
+    if isinstance(search_data, dict):
+      log( __name__, "received data has a new format, convert it to list")
+      search_data = [v for v in search_data.values()]
     search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
 				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(item['file_original_path'])))[0],
 				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
