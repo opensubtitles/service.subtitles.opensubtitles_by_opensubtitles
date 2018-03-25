@@ -42,7 +42,7 @@ def Search( item ):
   if search_data != None:
     if isinstance(search_data, dict):
       log( __name__, "received data has a new format, convert it to list")
-      search_data = [v for v in search_data.values()]
+      search_data = search_data.values()
     search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
 				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(item['file_original_path'])))[0],
 				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
@@ -112,7 +112,7 @@ def takeTitleFromFocusedItem():
     labelTVShowTitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
     labelSeason = xbmc.getInfoLabel("ListItem.Season")
     labelEpisode = xbmc.getInfoLabel("ListItem.Episode")
-    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode	
+    labelType = xbmc.getInfoLabel("ListItem.DBTYPE")  #movie/tvshow/season/episode
     isItMovie = labelType == 'movie' or xbmc.getCondVisibility("Container.Content(movies)")
     isItEpisode = labelType == 'episode' or xbmc.getCondVisibility("Container.Content(episodes)")
 
