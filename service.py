@@ -10,7 +10,7 @@ import xbmcgui,xbmcplugin
 import xbmcvfs
 import uuid
 import json
-import pysubs2
+from lib import pysubs2
 import chardet
 
 __addon__ = xbmcaddon.Addon()
@@ -178,15 +178,16 @@ def merge(file):
     top_style = pysubs2.SSAStyle()
     bottom_style=subs[0].styles["Default"].copy()
     top_style.alignment=8
-    top_style.fontsize=__addon__.getSetting('top_fontsize')
-    top_style.bold = __addon__.getSetting('top_bold')
-    top_style.bold = __addon__.getSetting('top_font')
+    top_style.fontsize= int(__addon__.getSetting('top_fontsize'))
+    if(__addon__.getSetting('top_bold') == 'Yes'):
+      top_style.bold = 1
+    top_style.fontname = unicode(__addon__.getSetting('top_font'))
 
     if (__addon__.getSetting('top_color') == 'Yellow'):
       top_style.primarycolor=pysubs2.Color(255, 255, 0, 0)
     elif (__addon__.getSetting('top_color') == 'White'):
       top_style.primarycolor=pysubs2.Color(255, 255, 255, 0)
-    #    top_style.secondarycolor=pysubs2.Color(255,255,255,0)
+      top_style.secondarycolor=pysubs2.Color(255,255,255,0)
     if (__addon__.getSetting('top_background') == 'Yes'):
       top_style.backcolor=pysubs2.Color(0,0,0,128)
       top_style.outlinecolor=pysubs2.Color(0,0,0,128)
@@ -194,9 +195,10 @@ def merge(file):
       top_style.outline=0
       top_style.borderstyle=4
     bottom_style.alignment = 2
-    bottom_style.fontsize=__addon__.getSetting('bottom_fontsize')
-    bottom_style.bold = __addon__.getSetting('bottom_bold')
-    bottom_style.bold = __addon__.getSetting('bottom_font')
+    bottom_style.fontsize= unicode(__addon__.getSetting('bottom_fontsize'))
+    if (__addon__.getSetting('bottom_bold') =='Yes'):
+      bottom_style.bold = 1
+    bottom_style.fontname = unicode(__addon__.getSetting('bottom_font'))
     if (__addon__.getSetting('bottom_color') == 'Yellow'):
       bottom_style.primarycolor=pysubs2.Color(255, 255, 0, 0)
     elif (__addon__.getSetting('bottom_color') == 'White'):
