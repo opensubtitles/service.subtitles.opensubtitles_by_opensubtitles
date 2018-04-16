@@ -29,3 +29,55 @@ msgstr ""
 msgctxt "#32004"
 msgid "Login Details"
 msgstr ""
+
+msgctxt "#32005"
+msgid "Subtitles Styles"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Top Subtitle"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Font"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Font Size"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Font Bold"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Color"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Black Translusent Background"
+msgstr ""
+
+msgctxt "#32012"
+msgid "White"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32015"
+msgid "No"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Bottom Subtitle"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Enable Dual Subtitles"
+msgstr ""
