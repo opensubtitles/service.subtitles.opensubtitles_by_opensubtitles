@@ -66,18 +66,18 @@ msgctxt "#32013"
 msgid "Yellow"
 msgstr ""
 
-msgctxt "#32014"
-msgid "Yes"
-msgstr ""
-
-msgctxt "#32015"
-msgid "No"
-msgstr ""
-
 msgctxt "#32016"
 msgid "Bottom Subtitle"
 msgstr ""
 
 msgctxt "#32017"
 msgid "Enable Dual Subtitles"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Enable Dual Subtitles In General Tab To Use Styles"
+msgstr ""
+
+msgctxt "#32019"
+msgid "[COLOR yellow]Download And Combine Subtitles[/COLOR]"
 msgstr ""

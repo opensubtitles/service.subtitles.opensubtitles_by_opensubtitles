@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="16000">
-        <setting default="32014" subsetting="true" label="32017" id="dualsub_enable" type="labelenum" lvalues="32014|32015" />
+        <setting label="32017" type="bool" subsetting="true" id="dualsub_enable" default="true"/>
     </category>  
     <category label="32004">
       <setting id="OSuser" type="text" label="32002" default=""/>
       <setting id="OSpass" type="text" option = "hidden" label="32003" default=""/>
     </category>   
-    <category label="32005">
-    	<setting label="32006" type="lsep"/>
-    	<setting default="Arial" subsetting="true" label="32007" id="top_font" type="labelenum" lvalues="Arial|Verdana"/>
-    	<setting default="19" subsetting="true" label="32008" type="slider" id="top_fontsize" range="12,2,30" option="int" />
-    	<setting default="32015" subsetting="true" label="32009" id="top_bold" type="labelenum" lvalues="32014|32015" />
-    	<setting default="32013" subsetting="true" label="32010"  id="top_color" type="labelenum" lvalues="32012|32013" />
-    	<setting default="32014" subsetting="true" label="32011" id="top_background" type="labelenum" lvalues="32014|32015" />
-    	<setting label="32006" type="lsep"/>
-    	<setting default="Arial" subsetting="true" label="32007" id="bottom_font" type="labelenum" lvalues="Arial|Verdana"/>
-    	<setting default="19" subsetting="true" label="32008" type="slider" id="bottom_fontsize" range="12,2,30" option="int" />
-    	<setting default="32015" subsetting="true" label="32009" id="bottom_bold" type="labelenum" lvalues="32014|32015" />
-    	<setting default="32012" subsetting="true" label="32010" id="bottom_color" type="labelenum" lvalues="32012|32013" />
-    	<setting default="32015" subsetting="true" label="32011" id="bottom_background" type="labelenum" lvalues="32014|32015" />
+    <category label="32005" >
+        <setting visible='false' label="32017" type="bool" subsetting="true" id="dualsub_enable" default="true"/>
+        <setting visible='eq(-1,false)' label="32018" type="lsep"/>
+    	<setting visible='eq(-2,true)' label="32006" type="lsep"/>
+    	<setting visible='eq(-3,true)' default="Arial" subsetting="true" label="32007" id="top_font" type="labelenum" lvalues="Arial|Verdana"/>
+    	<setting visible='eq(-4,true)' default="19" subsetting="true" label="32008" type="slider" id="top_fontsize" range="12,2,30" option="int" />
+    	<setting visible='eq(-5,true)' default="false" subsetting="true" label="32009" id="top_bold" type="bool" />
+    	<setting visible='eq(-6,true)' default="32013" subsetting="true" label="32010"  id="top_color" type="labelenum" lvalues="32012|32013" />
+    	<setting visible='eq(-7,true)' default="true" subsetting="true" label="32011" id="top_background" type="bool" />
+    	<setting visible='eq(-8,true)' label="32016" type="lsep"/>
+    	<setting visible='eq(-9,true)' default="Arial" subsetting="true" label="32007" id="bottom_font" type="labelenum" lvalues="Arial|Verdana"/>
+    	<setting visible='eq(-10,true)' default="19" subsetting="true" label="32008" type="slider" id="bottom_fontsize" range="12,2,30" option="int" />
+    	<setting visible='eq(-11,true)' default="false" subsetting="true" label="32009" id="bottom_bold" type="bool" />
+    	<setting visible='eq(-12,true)' default="32012" subsetting="true" label="32010" id="bottom_color" type="labelenum" lvalues="32012|32013" />
+    	<setting visible='eq(-13,true)' default="false" subsetting="true" label="32011" id="bottom_background" type="bool" />
     </category>
 </settings>

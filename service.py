@@ -62,7 +62,6 @@ def Search( item ):
                                     iconImage      = str(int(round(float(item_data["SubRating"])/2))),
                                     thumbnailImage = item_data["ISO639"]
                                     )
-
         listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
         listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
         url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s&format=%s" % (__scriptid__,
@@ -72,9 +71,9 @@ def Search( item ):
                                                                           item_data["SubFormat"]
                                                                           )
         listitems.append(listitem)
-        if(__addon__.getSetting('dualsub_enable') != 'Yes'):
+        if(__addon__.getSetting('dualsub_enable') != 'true'):
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
-    if(__addon__.getSetting('dualsub_enable') == 'Yes'):
+    if(__addon__.getSetting('dualsub_enable') == 'true'):
       dialog = xbmcgui.Dialog()
       ret = dialog.multiselect("Choose a subtitle", [i for i in listitems],useDetails=True)
       if ret and len(ret) > 0:
@@ -86,7 +85,7 @@ def Search( item ):
             'format':search_data[sub]['SubFormat']})
         payload=json.dumps(subs[:2])
         payload=urllib.quote(payload)
-        listitem = xbmcgui.ListItem(label2='Download and Combine subtitle')
+        listitem = xbmcgui.ListItem(label2=__language__(32019))
         url = "plugin://%s/?action=download&payload=%s"% (__scriptid__,payload)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
@@ -179,7 +178,7 @@ def merge(file):
     bottom_style=subs[0].styles["Default"].copy()
     top_style.alignment=8
     top_style.fontsize= int(__addon__.getSetting('top_fontsize'))
-    if(__addon__.getSetting('top_bold') == 'Yes'):
+    if(__addon__.getSetting('top_bold') == 'true'):
       top_style.bold = 1
     top_style.fontname = unicode(__addon__.getSetting('top_font'))
 
@@ -188,7 +187,7 @@ def merge(file):
     elif (__addon__.getSetting('top_color') == 'White'):
       top_style.primarycolor=pysubs2.Color(255, 255, 255, 0)
       top_style.secondarycolor=pysubs2.Color(255,255,255,0)
-    if (__addon__.getSetting('top_background') == 'Yes'):
+    if (__addon__.getSetting('top_background') == 'true'):
       top_style.backcolor=pysubs2.Color(0,0,0,128)
       top_style.outlinecolor=pysubs2.Color(0,0,0,128)
       top_style.shadow=0
@@ -196,14 +195,14 @@ def merge(file):
       top_style.borderstyle=4
     bottom_style.alignment = 2
     bottom_style.fontsize= unicode(__addon__.getSetting('bottom_fontsize'))
-    if (__addon__.getSetting('bottom_bold') =='Yes'):
+    if (__addon__.getSetting('bottom_bold') =='true'):
       bottom_style.bold = 1
     bottom_style.fontname = unicode(__addon__.getSetting('bottom_font'))
     if (__addon__.getSetting('bottom_color') == 'Yellow'):
       bottom_style.primarycolor=pysubs2.Color(255, 255, 0, 0)
     elif (__addon__.getSetting('bottom_color') == 'White'):
       bottom_style.primarycolor=pysubs2.Color(255, 255, 255, 0)
-    if (__addon__.getSetting('bottom_background') == 'Yes'):
+    if (__addon__.getSetting('bottom_background') == 'true'):
       bottom_style.backcolor=pysubs2.Color(0,0,0,128)
       bottom_style.outlinecolor=pysubs2.Color(0,0,0,128)
       bottom_style.shadow=0
@@ -289,7 +288,7 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   Search(item)
 
 elif params['action'] == 'download':
-  if(__addon__.getSetting('dualsub_enable') == 'Yes'):
+  if(__addon__.getSetting('dualsub_enable') == 'true'):
     payload=json.loads(urllib.unquote(params['payload']))
     subs=[]
     for sub in payload:
