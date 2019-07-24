@@ -2,7 +2,7 @@ OpenSubtitles.org by OpenSubtitles KODI add-on
 ==============================================
 
 How to install this addon in KODI:
-- download http://www.opensubtitles.org/addons/kodi/service.subtitles.opensubtitles_by_opensubtitles.zip
+- download https://github.com/opensubtitles/service.subtitles.opensubtitles_by_opensubtitles/archive/master.zip
 - open KODI -> System -> Settings -> Add-ons -> Install from zip file
 - navigate to the file you downloaded
          
