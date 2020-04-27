@@ -42,7 +42,7 @@ def Search( item ):
 
   if search_data != None:
     search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
-				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(unquote(xbmc.Player().getPlayingFile())))[0],
+				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(unquote(item['file_original_path'])))[0],
 				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
 				     not x['LanguageName'] == PreferredSub])
     for item_data in search_data:
