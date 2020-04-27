@@ -17,10 +17,10 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 
-__cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("utf-8")
-__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') ).decode("utf-8")
+__cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') )
+__profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') )
+__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
+__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') )
 
 if xbmcvfs.exists(__temp__):
   shutil.rmtree(__temp__)
@@ -29,6 +29,7 @@ xbmcvfs.mkdirs(__temp__)
 sys.path.append (__resource__)
 
 from OSUtilities import OSDBServer, log, hashFile, normalizeString
+from urllib.parse import unquote
 
 def Search( item ):
   search_data = []
@@ -36,12 +37,12 @@ def Search( item ):
     search_data = OSDBServer().searchsubtitles(item)
   except:
     log( __name__, "failed to connect to service for subtitle search")
-    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32001))).encode('utf-8'))
+    xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32001))))
     return
 
   if search_data != None:
     search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
-				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(item['file_original_path'])))[0],
+				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(unquote(xbmc.Player().getPlayingFile())))[0],
 				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
 				     not x['LanguageName'] == PreferredSub])
     for item_data in search_data:
@@ -54,11 +55,9 @@ def Search( item ):
           (item['season'] == "" and item['episode'] == "") ## for file search, season and episode == ""
          ):
         listitem = xbmcgui.ListItem(label          = item_data["LanguageName"],
-                                    label2         = item_data["SubFileName"],
-                                    iconImage      = str(int(round(float(item_data["SubRating"])/2))),
-                                    thumbnailImage = item_data["ISO639"]
+                                    label2         = item_data["SubFileName"]
                                     )
-
+        listitem.setArt( { "icon": str(int(round(float(item_data["SubRating"])/2))), "thumb" : item_data["ISO639"] } )
         listitem.setProperty( "sync", ("false", "true")[str(item_data["MatchedBy"]) == "moviehash"] )
         listitem.setProperty( "hearing_imp", ("false", "true")[int(item_data["SubHearingImpaired"]) != 0] )
         url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s&format=%s" % (__scriptid__,
@@ -149,38 +148,23 @@ params = get_params()
 if params['action'] == 'search' or params['action'] == 'manualsearch':
   log( __name__, "action '%s' called" % params['action'])
   item = {}
-
-  if xbmc.Player().isPlaying():
-    item['temp']               = False
-    item['rar']                = False
-    item['mansearch']          = False
-    item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
-    item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
-    item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
-    item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
-    item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
-    item['file_original_path'] = xbmc.Player().getPlayingFile().decode('utf-8')                 # Full path of a playing file
-    item['3let_language']      = [] #['scc','eng']
-
-  else:
-    item['temp'] = False
-    item['rar'] = False
-    item['mansearch'] = False
-    item['year'] = ""
-    item['season'] = ""
-    item['episode'] = ""
-    item['tvshow'] = ""
-    item['title'] = takeTitleFromFocusedItem()
-    item['file_original_path'] = ""
-    item['3let_language'] = []
-
-  PreferredSub = params.get('preferredlanguage')
+  item['temp']               = False
+  item['rar']                = False
+  item['mansearch']          = False
+  item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                         # Year
+  item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                  # Season
+  item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                 # Episode
+  item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
+  item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
+  item['file_original_path'] = xbmc.Player().getPlayingFile()                                 # Full path of a playing file
+  item['3let_language']      = [] #['scc','eng']
+  PreferredSub		      = params.get('preferredlanguage')
 
   if 'searchstring' in params:
     item['mansearch'] = True
     item['mansearchstr'] = params['searchstring']
 
-  for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+  for lang in unquote(params['languages']).split(","):
     if lang == "Portuguese (Brazil)":
       lan = "pob"
     elif lang == "Greek":
