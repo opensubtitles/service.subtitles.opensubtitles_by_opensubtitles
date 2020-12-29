@@ -88,7 +88,7 @@ def Download(id,url,format,stack=False):
     zip = os.path.join( __temp__, "OpenSubtitles.zip")
     f = urllib.urlopen(url)
     if not os.path.exists( __temp__ ):
-        os.mkdir( __temp__, mode=0775 )
+        os.mkdir( __temp__, mode=0o775 )
     with open(zip, "wb") as subFile:
       subFile.write(f.read())
     subFile.close()
