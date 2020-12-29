@@ -8,6 +8,10 @@ How to install this addon in KODI:
          
                             
 Changelog
+
+5.2.15
+- Ported to python 3.0. The 30th anniversary of the Restoration of Independence of Lithuania
+
 5.2.14
 - New feature: Users are able to check for subtitles when Kodi is not playing, by using the manual search or by standing on an item and opening the subtitles search dialog (By key or by an external addon) | @burekas
 - The external addon for the contextmenu can be downloaded from here: https://github.com/burekas7/context.subtitlesdialog.contextmenu
